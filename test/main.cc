@@ -1,34 +1,22 @@
-#include "pair2.h"
-/*check if pharentesis are balanced well*/
-bool tex::checkPhar(const std::string &p) {
-	uint opened=0,closed=0;
-	for(uint i=0;i<p.length();i++){
-		if(p[i] == '('){
-			opened++;
-		}else if(p[i]==')'){
-			closed++;
-		}else{
-			continue;
-		}
-	}	
-	return opened==closed;
-}
-/*covert char to string*/
-std::string tex::char2str(const char &c){
+#include <iostream>
+#include <string>
+
+#define ABC "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+#define NUMS "0123456789"
+#define NUMSDOT "0123456789."
+#define E 2.718281828
+
+std::string char2str(const char &c){
 	std::string ret = "";
 	ret.append(1,c);
 	return ret;
 }
-/*make count of all the times the pattern is repeated*/
-uint tex::countChar(const std::string &text, const std::string &patt){
-	uint ret=0;
-	for(uint i=0;i<text.length();i++)
-		(text[i] == patt)? ret++ : continue;
 
-	return ret;
+void error(const std::string &desc){
+	std::cerr << "checkFunction error at: " << desc << "\n"; 
 }
-/*check if string has a pattern*/
-bool tex::contain(const std::string &text, const std::string &patterns){
+
+bool contain(const std::string &text, const std::string &patterns){
 	for(int i=0;i<text.length();i++){
 		for(int j=0;j<patterns.length();j++){
 			if(text[i] == patterns[j]){
@@ -38,8 +26,7 @@ bool tex::contain(const std::string &text, const std::string &patterns){
 	}
 	return false;
 }
-/*check if a function is well*/
-bool tex::chechFunction(const std::string &fun){
+bool chechFunction(const std::string &fun){
 	std::string trim = "";
 	/* quit all white spaces */
 	for(int i=0;i<fun.length();i++){
@@ -118,4 +105,23 @@ bool tex::chechFunction(const std::string &fun){
 		}
 	}
 	return true;
+}
+
+
+int main(){
+	std::cout << "ok\n";
+	
+	std::string f[] = {"2*x + 8 - (7*7 - x*9)",
+			"55*4 + 6*(3^3*x-7)/6*",
+			"88*x -4*(5*32.66-77)/8"};
+	for(uint i=0;i<3;i++){
+		std::cout << f[i] << "\n";
+		if(chechFunction(f[i])){
+			std::cout << "function " << i << " is well\n";
+		}else {
+			std::cout << "function "<< i << " is wrong \n";
+		}
+	}
+	
+	return 0;
 }
